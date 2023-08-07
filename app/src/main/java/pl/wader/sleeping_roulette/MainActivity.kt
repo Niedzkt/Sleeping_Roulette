@@ -1,5 +1,6 @@
 package pl.wader.sleeping_roulette
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,14 +24,20 @@ import pl.wader.sleeping_roulette.ui.theme.Sleeping_RouletteTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val windows = this.window
+        windows.statusBarColor = Color.WHITE
+
         setContent {
             val navController = rememberNavController()
 
             NavHost(navController = navController, startDestination = "home"){
                 composable("home"){
-                   HomeScreen(onClick = {
-                       navController.navigate(it)
-                   })
+                   HomeScreen(
+                       //onClick = {
+                      // navController.navigate(it)
+                  // }
+                )
                 }
                 composable("play"){
                     GameScreen()

@@ -5,8 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,21 +22,37 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.wader.sleeping_roulette.R
+import pl.wader.sleeping_roulette.ui.theme.DarkBlue
+import pl.wader.sleeping_roulette.ui.theme.DarkGold
+import pl.wader.sleeping_roulette.ui.theme.DarkerBlue
+import pl.wader.sleeping_roulette.ui.theme.DarkerGray
+import pl.wader.sleeping_roulette.ui.theme.Gold
+import pl.wader.sleeping_roulette.ui.theme.LightDarkGray
 import pl.wader.sleeping_roulette.ui.theme.MainFont
 
-
+//onClick:(String) ->Unit
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HomeScreen(onClick:(String) ->Unit){
+fun HomeScreen(){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.DarkGray),
+            .background(LightDarkGray),
         contentAlignment = Alignment.TopCenter
 
     )
     {
+        Surface(color = DarkGold, modifier = Modifier.height(650.dp).fillMaxWidth(),
+        shape = RoundedCornerShape(bottomEnd = 60.dp, bottomStart = 60.dp)) {
+            Surface(color = DarkerGray, modifier = Modifier.matchParentSize().padding(4.dp),
+                shape = RoundedCornerShape(bottomEnd = 60.dp, bottomStart = 60.dp)) {
+
+            }
+        }
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
@@ -40,8 +62,9 @@ fun HomeScreen(onClick:(String) ->Unit){
                     text = "sleeping roulette",
                     style = TextStyle(
                     fontSize = 48.sp,
-                    color = Color.Red),
-                    fontFamily = MainFont
+                    color = Gold),
+                    fontFamily = MainFont,
+                    modifier = Modifier.padding(4.dp)
                     )
         }
         Box(
@@ -54,7 +77,9 @@ fun HomeScreen(onClick:(String) ->Unit){
                 verticalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = { onClick("play") },
+                    onClick = {
+                        //onClick("play")
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
                     )
@@ -63,13 +88,15 @@ fun HomeScreen(onClick:(String) ->Unit){
                         text = "play",
                         style = TextStyle(
                             fontSize = 38.sp,
-                            color = Color.Red,
+                            color = Gold,
                             fontFamily = MainFont
                         )
                     )
                 }
                 Button(
-                    onClick = { onClick("settings") },
+                    onClick = {
+                       // onClick("settings")
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
                     )
@@ -78,13 +105,15 @@ fun HomeScreen(onClick:(String) ->Unit){
                         text = "settings",
                         style = TextStyle(
                             fontSize = 38.sp,
-                            color = Color.Red,
+                            color = Gold,
                             fontFamily = MainFont
                         )
                     )
                 }
                 Button(
-                    onClick = { onClick("history") },
+                    onClick = {
+                        //onClick("history")
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
                     )
@@ -93,13 +122,15 @@ fun HomeScreen(onClick:(String) ->Unit){
                         text = "history",
                         style = TextStyle(
                             fontSize = 38.sp,
-                            color = Color.Red,
+                            color = Gold,
                             fontFamily = MainFont
                         )
                     )
                 }
                 Button(
-                    onClick = { onClick("knowHow") },
+                    onClick = {
+                        //onClick("knowHow")
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
                     )
@@ -108,13 +139,15 @@ fun HomeScreen(onClick:(String) ->Unit){
                         text = "how to play",
                         style = TextStyle(
                             fontSize = 38.sp,
-                            color = Color.Red,
+                            color = Gold,
                             fontFamily = MainFont
                         )
                     )
                 }
                 Button(
-                    onClick = { onClick("exit") },
+                    onClick = {
+                        //onClick("exit")
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
                     )
@@ -123,7 +156,7 @@ fun HomeScreen(onClick:(String) ->Unit){
                         text = "exit",
                         style = TextStyle(
                             fontSize = 38.sp,
-                            color = Color.Red,
+                            color = Gold,
                             fontFamily = MainFont
                         )
                     )
@@ -134,11 +167,3 @@ fun HomeScreen(onClick:(String) ->Unit){
             }
     }
 }
-
-
-/*
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PrevieHomeScreen(){
-    HomeScreen()
-}*/
