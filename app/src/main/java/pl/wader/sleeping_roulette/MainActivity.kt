@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val windows = this.window
-        windows.statusBarColor = Color.WHITE
+        windows.statusBarColor = Color.BLACK
 
         setContent {
             val navController = rememberNavController()
@@ -34,9 +34,7 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "home"){
                 composable("home"){
                    HomeScreen(
-                       //onClick = {
-                      // navController.navigate(it)
-                  // }
+                       onClick = { navController.navigate(it) }
                 )
                 }
                 composable("play"){
