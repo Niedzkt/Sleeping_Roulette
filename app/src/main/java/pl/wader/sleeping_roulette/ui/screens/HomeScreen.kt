@@ -42,7 +42,6 @@ import pl.wader.sleeping_roulette.ui.theme.DarkerBlue
 import pl.wader.sleeping_roulette.ui.theme.DarkerGray
 import pl.wader.sleeping_roulette.ui.theme.Gold
 import pl.wader.sleeping_roulette.ui.theme.LightDarkGray
-import pl.wader.sleeping_roulette.ui.theme.LightGray
 import pl.wader.sleeping_roulette.ui.theme.MainFont
 import pl.wader.sleeping_roulette.ui.theme.imageGray
 
@@ -66,7 +65,7 @@ fun HomeScreen(onClick:(String) ->Unit){
         )
        Surface(color = DarkerGray.copy(0.5f),
            modifier = Modifier
-           .height(650.dp)
+           .height(730.dp)
            .fillMaxWidth(),
             shape = RoundedCornerShape(
                 bottomEnd = 45.dp,

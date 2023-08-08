@@ -17,5 +17,9 @@ val DarkBlue = Color(0xFF0D2390)
 val DarkerBlue = Color(0xFF030F4E)
 val DarkerGray = Color(0xFF2F2E2F)
 val LightDarkGray = Color(0xFF181718)
-val LightGray = Color(0xFF949193)
+
+
+
+val LightImageGray = Color(0xFFdcdddc)
 val imageGray = Color(0xFFe7e7e7)
+val MainMenuBlack = Color(0xFF000001)
