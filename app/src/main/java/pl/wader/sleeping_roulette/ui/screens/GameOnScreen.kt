@@ -2,9 +2,11 @@ package pl.wader.sleeping_roulette.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -34,14 +38,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import pl.wader.sleeping_roulette.R
+import pl.wader.sleeping_roulette.ui.theme.LightDarkGray
 import pl.wader.sleeping_roulette.ui.theme.LightImageGray
 import pl.wader.sleeping_roulette.ui.theme.MainFont
 import pl.wader.sleeping_roulette.ui.theme.MainMenuBlack
 import pl.wader.sleeping_roulette.ui.theme.imageGray
 
-@Preview(showSystemUi = true, showBackground = true)
+//@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun GameOnScreen(){
+fun GameOnScreen(onClick: (String)-> Unit){
 
     var rotation by remember {
         mutableStateOf(0f)
@@ -49,9 +54,13 @@ fun GameOnScreen(){
     var position by remember {
         mutableStateOf(0f)
     }
+    var currentSteps by remember {
+        mutableStateOf(0f)
+    }
     var coroutineScope = rememberCoroutineScope()
 
     val movingDistance = 50f
+    val steps = listOf(".", "..", "...")
 
     LaunchedEffect(key1 = "rotateIncrementally"){
         while (true){
@@ -64,6 +73,13 @@ fun GameOnScreen(){
         while (true){
             delay(1000)
             position = if (position==0f) movingDistance else 0f
+        }
+    }
+
+    LaunchedEffect(key1 = "loadingDots"){
+        while (true){
+            delay(1000)
+            currentSteps = (currentSteps+1) % steps.size
         }
     }
 
@@ -109,7 +125,7 @@ fun GameOnScreen(){
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .height(420.dp),
                 contentAlignment = Alignment.TopCenter)
                 {
                     Image(
@@ -135,7 +151,64 @@ fun GameOnScreen(){
                             .graphicsLayer(
                                 translationY = position
                             ))
+
+
             }
+                Column(
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.width(300.dp)
+                ) {
+                    Text(
+                        text = "Your alarm is set, go to sleep",
+                        style = TextStyle(
+                            fontSize = 22.sp,
+                            color = imageGray
+                        )
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(10.dp)
+                    )
+
+                    Text(
+                        text = "Currently playing" + steps[currentSteps.toInt()],
+                        style = TextStyle(
+                            fontSize = 22.sp,
+                            color = imageGray
+                        )
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(30.dp)
+                    )
+
+                    Button(
+                        onClick = { onClick("home") },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent
+                        ),
+                        modifier = Modifier
+                            .shadow(4.dp, RoundedCornerShape(1.dp), clip = false)
+                            .background(LightDarkGray.copy(0.88f), RoundedCornerShape(4.dp))
+                            .fillMaxWidth()
+                            .border(2.dp, imageGray, RoundedCornerShape(6.dp))
+                            .padding(2.dp)) {
+                        Text(
+                            text = "stop",
+                            style = TextStyle(
+                                fontSize = 50.sp,
+                                color = imageGray,
+                                fontFamily = MainFont
+                            )
+                        )
+
+                    }
+
+                }
+
         }
         }
 
