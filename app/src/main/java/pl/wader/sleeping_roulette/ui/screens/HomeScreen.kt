@@ -63,7 +63,8 @@ fun HomeScreen(onClick:(String) ->Unit){
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
         )
-       Surface(color = DarkerGray.copy(0.5f),
+       Surface(
+           color = DarkerGray.copy(0.5f),
            modifier = Modifier
            .height(730.dp)
            .fillMaxWidth(),
@@ -122,7 +123,9 @@ fun HomeScreen(onClick:(String) ->Unit){
                         )
                     )
                 }
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(
+                    modifier = Modifier.height(12.dp)
+                )
 
                 Button(
                     onClick = {
@@ -147,7 +150,9 @@ fun HomeScreen(onClick:(String) ->Unit){
                     )
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(
+                    modifier = Modifier.height(12.dp)
+                )
 
                 Button(
                     onClick = {
@@ -172,7 +177,9 @@ fun HomeScreen(onClick:(String) ->Unit){
                     )
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(
+                    modifier = Modifier.height(12.dp)
+                )
 
                 Button(
                     onClick = {
@@ -197,7 +204,9 @@ fun HomeScreen(onClick:(String) ->Unit){
                     )
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(
+                    modifier = Modifier.height(12.dp)
+                )
 
                 Button(
                     onClick = {

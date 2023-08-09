@@ -39,7 +39,9 @@ class MainActivity : ComponentActivity() {
                 )
                 }
                 composable("play"){
-                    GameScreen()
+                    GameScreen(
+                        onClick = {navController.navigate(it)}
+                    )
                 }
                 composable("gameOn"){
                     GameOnScreen()
