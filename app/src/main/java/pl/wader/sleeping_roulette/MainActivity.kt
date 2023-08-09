@@ -14,11 +14,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import pl.wader.sleeping_roulette.ui.screens.AlarmScreen
 import pl.wader.sleeping_roulette.ui.screens.GameOnScreen
 import pl.wader.sleeping_roulette.ui.screens.GameScreen
 import pl.wader.sleeping_roulette.ui.screens.HistoryScreen
@@ -50,6 +52,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
+            intent?.getStringExtra("NAVIGATE_TO")?.let { destination ->
+                if(destination == "alarmOn"){
+                    LaunchedEffect(key1 = destination){
+                        navController.navigate("alarmOn")
+                    }
+                }
+            }
+
             NavHost(navController = navController, startDestination = "home"){
                 composable("home"){
                    HomeScreen(
@@ -66,6 +76,9 @@ class MainActivity : ComponentActivity() {
                         gameScreenVm = gameScreenVm,
                         onClick = {navController.navigate(it)}
                     )
+                }
+                composable("alarmOn"){
+                    AlarmScreen()
                 }
                 composable("settings"){
                     SettingsScreen()
