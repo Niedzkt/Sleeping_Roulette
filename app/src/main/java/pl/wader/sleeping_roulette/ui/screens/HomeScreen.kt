@@ -195,7 +195,7 @@ fun HomeScreen(onClick:(String) ->Unit){
                         .border(2.dp, imageGray, RoundedCornerShape(6.dp))
                 ) {
                     Text(
-                        text = "how to play",
+                        text = "support me",
                         style = TextStyle(
                             fontSize = 38.sp,
                             color = imageGray,

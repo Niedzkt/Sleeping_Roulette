@@ -31,12 +31,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import pl.wader.sleeping_roulette.GameScreenViewModel
 import pl.wader.sleeping_roulette.R
 import pl.wader.sleeping_roulette.ui.theme.LightDarkGray
 import pl.wader.sleeping_roulette.ui.theme.LightImageGray
@@ -46,7 +48,11 @@ import pl.wader.sleeping_roulette.ui.theme.imageGray
 
 //@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun GameOnScreen(onClick: (String)-> Unit){
+fun GameOnScreen(gameScreenVm: GameScreenViewModel ,onClick: (String)-> Unit){
+
+    val context = LocalContext.current
+
+    gameScreenVm.setRandomAlarm(context)
 
     var rotation by remember {
         mutableStateOf(0f)
