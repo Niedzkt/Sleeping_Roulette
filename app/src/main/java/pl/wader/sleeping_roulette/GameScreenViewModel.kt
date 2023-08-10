@@ -8,14 +8,33 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.provider.AlarmClock
 import androidx.lifecycle.ViewModel
+import kotlin.random.Random
+
+data class DifficultyLevel(val name: String, val hourRange: IntRange, val minuteRange: IntRange)
 
 class GameScreenViewModel:ViewModel() {
 
-    fun setRandomAlarm(context: Context){
-        val randomHour = (0..0).random()
-        val randomMinute = (0..1).random()
 
-        setAlarm(context, randomHour, randomMinute)
+    val difficultyLevels = listOf(
+        DifficultyLevel("Easy", 0..0, 0..1),
+        DifficultyLevel("Medium", 0..10, 0..59),
+        DifficultyLevel("Hard", 0..23, 0..59),
+        DifficultyLevel("Asian", 0..23, 9..59),
+    )
+
+    var selectedDifficultyLevel = difficultyLevels[0]
+
+
+    private var isAlarmSet = false
+
+    fun setRandomAlarm(context: Context){
+        if(!isAlarmSet){
+            val randomHour = Random.nextInt(selectedDifficultyLevel.hourRange.first, selectedDifficultyLevel.hourRange.last + 1)
+            val randomMinute = Random.nextInt(selectedDifficultyLevel.minuteRange.first, selectedDifficultyLevel.minuteRange.last + 1)
+
+            setAlarm(context, randomHour, randomMinute)
+            isAlarmSet = true
+        }
     }
 
     private fun setAlarm(context: Context, hour: Int, minute: Int){
@@ -27,7 +46,6 @@ class GameScreenViewModel:ViewModel() {
 
         val alarmIntent = Intent(context, YourAlarmReceiver::class.java)
 
-        // Dodajemy odpowiednią flagę w zależności od wersji Androida:
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         } else {

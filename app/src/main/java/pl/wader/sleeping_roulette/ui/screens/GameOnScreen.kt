@@ -48,7 +48,7 @@ import pl.wader.sleeping_roulette.ui.theme.imageGray
 
 //@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun GameOnScreen(gameScreenVm: GameScreenViewModel ,onClick: (String)-> Unit){
+fun GameOnScreen(gameScreenVm: GameScreenViewModel, onClick: (String)-> Unit){
 
     val context = LocalContext.current
 
