@@ -192,7 +192,8 @@ fun GameOnScreen(gameScreenVm: GameScreenViewModel, onClick: (String)-> Unit){
                     )
 
                     Button(
-                        onClick = { onClick("home") },
+                        onClick = { gameScreenVm.stopAlarm(context)
+                                    onClick("home") },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent
                         ),

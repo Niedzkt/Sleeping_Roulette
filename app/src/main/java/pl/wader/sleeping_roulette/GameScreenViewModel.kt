@@ -37,6 +37,10 @@ class GameScreenViewModel:ViewModel() {
         }
     }
 
+    fun stopAlarm(context: Context){
+        cancelAlarm(context)
+    }
+
     private fun setAlarm(context: Context, hour: Int, minute: Int){
         val calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
@@ -57,4 +61,17 @@ class GameScreenViewModel:ViewModel() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
+
+    private fun cancelAlarm(context: Context){
+        val alarmIntent = Intent(context, YourAlarmReceiver::class.java)
+        val flags = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        } else{
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, flags)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
+    }
+
 }
