@@ -25,16 +25,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import pl.wader.sleeping_roulette.GameScreenViewModel
 import pl.wader.sleeping_roulette.ui.theme.LightDarkGray
 import pl.wader.sleeping_roulette.ui.theme.LightImageGray
 import pl.wader.sleeping_roulette.ui.theme.MainFont
 import pl.wader.sleeping_roulette.ui.theme.MainMenuBlack
 import pl.wader.sleeping_roulette.ui.theme.imageGray
 
-@Preview(showBackground = true, showSystemUi = true)
+//@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AlarmScreen() {
+fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
 
+    val context = LocalContext.current
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -81,7 +83,8 @@ fun AlarmScreen() {
             ) {
                 Button(
                     onClick = {
-                        /*TODO*/
+                        gameScreenVm.stopAlarm(context)
+                        onClick("home")
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent

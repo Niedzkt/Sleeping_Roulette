@@ -74,7 +74,10 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable("alarmOn"){
-                    AlarmScreen()
+                    AlarmScreen(
+                        gameScreenVm = gameScreenVm,
+                        onClick = {navController.navigate(it)}
+                    )
                 }
                 composable("settings"){
                     SettingsScreen()
