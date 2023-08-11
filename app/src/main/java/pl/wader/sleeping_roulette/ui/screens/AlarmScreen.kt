@@ -1,10 +1,12 @@
 package pl.wader.sleeping_roulette.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,11 +34,31 @@ import pl.wader.sleeping_roulette.ui.theme.MainFont
 import pl.wader.sleeping_roulette.ui.theme.MainMenuBlack
 import pl.wader.sleeping_roulette.ui.theme.imageGray
 
+const val MILISECONDS_PER_SECOND = 1000
+const val SECONDS_PER_MINUTE = 60
+const val MINUTES_PER_HOUR = 60
+
 //@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
 
     val context = LocalContext.current
+    val elapsedTime = gameScreenVm.getElapsedTimed()
+
+    var totalSeconds: Long = 0L
+    var hours: Long = 0L
+    var minutes: Long = 0L
+    var seconds: Long = 0L
+    Log.d("AlarmScreen", "Before calculations: elapsedTime: $elapsedTime")
+    val endTime = gameScreenVm.endTime
+
+    if(endTime > 0) {
+        val totalSeconds = elapsedTime / MILISECONDS_PER_SECOND
+        hours = totalSeconds / (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)
+        minutes = (totalSeconds / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR
+        seconds = totalSeconds % SECONDS_PER_MINUTE
+    }
+    Log.d("AlarmScreen", "Elapsed Time: $elapsedTime")
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -81,10 +103,24 @@ fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
                 modifier = Modifier
                     .width(300.dp)
             ) {
+                Log.d("AlarmScreen", "hours: $hours, minutes: $minutes, seconds: $seconds")
+
+                Text(
+                    text = "You slept for $hours hours, $minutes minutes and $seconds seconds",
+
+                    style = TextStyle(
+                        fontSize = 48.sp,
+                        color = imageGray
+                    ),
+
+                    modifier = Modifier.padding(4.dp)
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
                 Button(
                     onClick = {
-                        gameScreenVm.stopAlarm(context)
-                        onClick("home")
+                        gameScreenVm.stopOngoingAlarm()
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
@@ -97,6 +133,32 @@ fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
                         .padding(2.dp)) {
                     Text(
                         text = "turn off alarm",
+                        style = TextStyle(
+                            fontSize = 35.sp,
+                            color = imageGray,
+                            fontFamily = MainFont
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    onClick = {
+                        gameScreenVm.stopOngoingAlarm()
+                        onClick("home")
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .shadow(4.dp, RoundedCornerShape(1.dp), clip = false)
+                        .background(LightDarkGray.copy(0.88f), RoundedCornerShape(4.dp))
+                        .fillMaxWidth()
+                        .border(2.dp, imageGray, RoundedCornerShape(6.dp))
+                        .padding(2.dp)) {
+                    Text(
+                        text = "menu",
                         style = TextStyle(
                             fontSize = 35.sp,
                             color = imageGray,

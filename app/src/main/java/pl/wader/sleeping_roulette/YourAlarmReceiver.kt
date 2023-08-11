@@ -6,10 +6,17 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.provider.Settings
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
+var mediaPlayer: MediaPlayer? = null
+
 class YourAlarmReceiver: BroadcastReceiver() {
+
+    companion object{
+        var isAlarmTriggered: Boolean = false
+    }
     override fun onReceive(context: Context, intent: Intent) {
         playAlarmSound(context)
         showNotification(context)
@@ -19,11 +26,16 @@ class YourAlarmReceiver: BroadcastReceiver() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         context.startActivity(newIntent)
+        isAlarmTriggered = true
+        Log.d("YourAlarmReceiver", "onReceive called. isAlarmTriggered set to true.")
+
     }
 
-    private fun playAlarmSound(context: Context){
-        val mediaPlayer = MediaPlayer.create(context, R.raw.alarm_sound)
-        mediaPlayer.start()
+    private fun playAlarmSound(context: Context) {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(context, R.raw.alarm_sound)
+        }
+        mediaPlayer?.start()
     }
 
     private fun showNotification(context: Context){
@@ -41,5 +53,11 @@ class YourAlarmReceiver: BroadcastReceiver() {
             e.printStackTrace()
         }
 
+    }
+
+    fun stopAlarm(){
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 }

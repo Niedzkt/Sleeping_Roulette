@@ -7,12 +7,21 @@ import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
 import android.provider.AlarmClock
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import java.util.Timer
+import java.util.TimerTask
 import kotlin.random.Random
 
 data class DifficultyLevel(val name: String, val hourRange: IntRange, val minuteRange: IntRange)
 
 class GameScreenViewModel:ViewModel() {
+
+   // private val _endTime = MutableStateFlow(0L)
+
+    var startTime: Long = 0L
+    var endTime: Long = 0L
 
 
     val difficultyLevels = listOf(
@@ -26,6 +35,20 @@ class GameScreenViewModel:ViewModel() {
 
 
     private var isAlarmSet = false
+    private var timer = Timer()
+
+    init {
+        timer.scheduleAtFixedRate(object : TimerTask(){
+            override fun run() {
+                checkAlarmTriggered()
+            }
+        },0,1000)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        timer.cancel()
+    }
 
     fun setRandomAlarm(context: Context){
         if(!isAlarmSet){
@@ -34,22 +57,41 @@ class GameScreenViewModel:ViewModel() {
 
             setAlarm(context, randomHour, randomMinute)
             isAlarmSet = true
+            startTime = System.currentTimeMillis()
+            Log.d("TAG", "setRandomAlarm called")
+            Log.d("GameScreenVM", "Alarm set. startTime: $startTime")
         }
     }
 
     fun stopAlarm(context: Context){
         cancelAlarm(context)
+        Log.d("TAG", "stopAlarm called")
     }
+    fun stopOngoingAlarm(){
+        YourAlarmReceiver().stopAlarm()
+        Log.d("TAG", "stopOngoingAlarm called")
+
+    }
+    fun checkAlarmTriggered(){
+        if(YourAlarmReceiver.isAlarmTriggered && endTime == 0L){
+            endTime=System.currentTimeMillis()
+            Log.d("GameScreenVM", "Alarm triggered. endTime: $endTime")
+        }
+    }
+    fun getElapsedTimed(): Long{
+        return endTime-startTime
+    }
+
 
     private fun setAlarm(context: Context, hour: Int, minute: Int){
         val calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
+            Log.d("TAG", "setAlarm called")
         }
 
         val alarmIntent = Intent(context, YourAlarmReceiver::class.java)
-
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         } else {
