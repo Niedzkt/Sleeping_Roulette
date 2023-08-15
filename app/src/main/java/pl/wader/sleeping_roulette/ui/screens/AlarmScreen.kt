@@ -18,13 +18,15 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.wader.sleeping_roulette.GameScreenViewModel
@@ -38,27 +40,35 @@ const val MILISECONDS_PER_SECOND = 1000
 const val SECONDS_PER_MINUTE = 60
 const val MINUTES_PER_HOUR = 60
 
-//@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
 
     val context = LocalContext.current
-    val elapsedTime = gameScreenVm.getElapsedTimed()
+    /*
+    val elapsedTime = remember {
+        mutableStateOf(gameScreenVm.getElapsedTimed())
+    }
 
     var totalSeconds: Long = 0L
-    var hours: Long = 0L
-    var minutes: Long = 0L
-    var seconds: Long = 0L
-    Log.d("AlarmScreen", "Before calculations: elapsedTime: $elapsedTime")
+    val hours = remember {
+        mutableStateOf(0L)
+    }
+    val minutes = remember {
+        mutableStateOf(0L)
+    }
+    val seconds = remember {
+        mutableStateOf(0L)
+    }
+    Log.d("AlarmScreen", "Before calculations: elapsedTime: ${elapsedTime.value}")
     val endTime = gameScreenVm.endTime
 
     if(endTime > 0) {
-        val totalSeconds = elapsedTime / MILISECONDS_PER_SECOND
-        hours = totalSeconds / (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)
-        minutes = (totalSeconds / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR
-        seconds = totalSeconds % SECONDS_PER_MINUTE
+        val totalSeconds = elapsedTime.value / MILISECONDS_PER_SECOND
+        hours.value = totalSeconds / (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)
+        minutes.value = (totalSeconds / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR
+        seconds.value = totalSeconds % SECONDS_PER_MINUTE
     }
-    Log.d("AlarmScreen", "Elapsed Time: $elapsedTime")
+    Log.d("AlarmScreen", "Elapsed Time: ${elapsedTime.value}")*/
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -103,20 +113,22 @@ fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
                 modifier = Modifier
                     .width(300.dp)
             ) {
-                Log.d("AlarmScreen", "hours: $hours, minutes: $minutes, seconds: $seconds")
+               // Log.d("AlarmScreen", "hours: ${hours.value}, minutes: ${minutes.value}, seconds: ${seconds.value}")
+               // Log.d("AlarmScreen", "Using GameScreenViewModel instance: $gameScreenVm")
 
                 Text(
-                    text = "You slept for $hours hours, $minutes minutes and $seconds seconds",
+                    text = "Hey, you... you're finally awake",
 
                     style = TextStyle(
-                        fontSize = 48.sp,
+                        fontSize = 22.sp,
                         color = imageGray
                     ),
 
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier.padding(4.dp),
+                    textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(350.dp))
 
                 Button(
                     onClick = {

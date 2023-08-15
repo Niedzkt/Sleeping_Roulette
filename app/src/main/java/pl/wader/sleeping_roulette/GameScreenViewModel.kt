@@ -6,29 +6,30 @@ import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
-import android.provider.AlarmClock
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.random.Random
 
 data class DifficultyLevel(val name: String, val hourRange: IntRange, val minuteRange: IntRange)
 
+
 class GameScreenViewModel:ViewModel() {
 
    // private val _endTime = MutableStateFlow(0L)
-
+   init {
+       Log.d("GameScreenViewModel", "Initialized instance: $this")
+   }
     var startTime: Long = 0L
     var endTime: Long = 0L
 
 
     val difficultyLevels = listOf(
-        DifficultyLevel("Easy", 0..0, 0..1),
+        DifficultyLevel("Easy", 0..0, 1..2),
         DifficultyLevel("Medium", 0..10, 0..59),
         DifficultyLevel("Hard", 0..23, 0..59),
-        DifficultyLevel("Asian", 0..23, 9..59),
+       // DifficultyLevel("Asian", 0..23, 9..59),
     )
 
     var selectedDifficultyLevel = difficultyLevels[0]
