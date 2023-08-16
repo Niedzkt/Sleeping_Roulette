@@ -1,5 +1,6 @@
 package pl.wader.sleeping_roulette
 
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -7,7 +8,12 @@ import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.random.Random
@@ -16,6 +22,30 @@ data class DifficultyLevel(val name: String, val hourRange: IntRange, val minute
 
 
 class GameScreenViewModel:ViewModel() {
+    private var interstitialAd: InterstitialAd?= null
+
+    fun loadInterstitialAd(context: Context){
+        val adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(
+            context,
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback(){
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    interstitialAd = ad
+                }
+
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    interstitialAd = null
+                }
+            }
+        )
+    }
+
+    fun showInterstitialAd(context: Context){
+        interstitialAd?.show(context as Activity)
+    }
 
    // private val _endTime = MutableStateFlow(0L)
    init {

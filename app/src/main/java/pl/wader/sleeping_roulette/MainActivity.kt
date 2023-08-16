@@ -1,5 +1,6 @@
 package pl.wader.sleeping_roulette
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -10,9 +11,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import pl.wader.sleeping_roulette.ui.screens.AlarmScreen
 import pl.wader.sleeping_roulette.ui.screens.GameOnScreen
 import pl.wader.sleeping_roulette.ui.screens.GameScreen
@@ -23,8 +30,11 @@ import pl.wader.sleeping_roulette.ui.screens.SettingsScreen
 
 class MainActivity : ComponentActivity() {
     private val gameScreenVm by viewModels<GameScreenViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MobileAds.initialize(this){}
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val name = "Alarm Channel"
@@ -55,6 +65,7 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "home"){
                 composable("home"){
                    HomeScreen(
+                       gameScreenVm = gameScreenVm,
                        onClick = { navController.navigate(it) }
                 )
                 }

@@ -1,5 +1,6 @@
 package pl.wader.sleeping_roulette.ui.screens
 
+import android.app.Activity
 import android.hardware.lights.Light
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import pl.wader.sleeping_roulette.GameScreenViewModel
 import pl.wader.sleeping_roulette.R
 import pl.wader.sleeping_roulette.ui.theme.DarkBlue
 import pl.wader.sleeping_roulette.ui.theme.DarkGold
@@ -47,8 +50,12 @@ import pl.wader.sleeping_roulette.ui.theme.imageGray
 
 //onClick:(String) ->Unit
 //@Preview(showBackground = true, showSystemUi = true)
+
 @Composable
-fun HomeScreen(onClick:(String) ->Unit){
+fun HomeScreen(gameScreenVm: GameScreenViewModel, onClick:(String) ->Unit){
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -183,7 +190,8 @@ fun HomeScreen(onClick:(String) ->Unit){
 
                 Button(
                     onClick = {
-                        onClick("knowHow")
+                        gameScreenVm.loadInterstitialAd(context)
+                        gameScreenVm.showInterstitialAd(context)
                               },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
@@ -195,7 +203,7 @@ fun HomeScreen(onClick:(String) ->Unit){
                         .border(2.dp, imageGray, RoundedCornerShape(6.dp))
                 ) {
                     Text(
-                        text = "support me",
+                        text = "watch add",
                         style = TextStyle(
                             fontSize = 38.sp,
                             color = imageGray,
