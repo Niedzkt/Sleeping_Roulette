@@ -18,7 +18,6 @@ fun SettingsScreen(gameScreenVm: GameScreenViewModel) {
 
     LazyColumn {
         items(sounds) { soundResId ->
-            // Zakładając, że chcesz użyć nazwy pliku jako etykiety dźwięku
             val soundName = context.resources.getResourceEntryName(soundResId)
             Text(
                 text = soundName,
