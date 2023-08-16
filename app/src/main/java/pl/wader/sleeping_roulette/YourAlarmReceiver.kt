@@ -17,6 +17,7 @@ class YourAlarmReceiver: BroadcastReceiver() {
         var isAlarmTriggered: Boolean = false
     }
     override fun onReceive(context: Context, intent: Intent) {
+
         playAlarmSound(context)
         showNotification(context)
 
@@ -31,8 +32,12 @@ class YourAlarmReceiver: BroadcastReceiver() {
     }
 
     private fun playAlarmSound(context: Context) {
+        val gameScreenVm = GameScreenViewModel()
+        val selectedSound = gameScreenVm.getSelectedSound(context)
+        val soundResId = context.resources.getIdentifier(selectedSound, "raw", context.packageName)
+
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(context, R.raw.alarm_sound)
+            mediaPlayer = MediaPlayer.create(context, soundResId)
         }
         mediaPlayer?.start()
     }

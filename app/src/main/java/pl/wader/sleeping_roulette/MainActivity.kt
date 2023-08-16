@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable("settings"){
-                    SettingsScreen()
+                    SettingsScreen(gameScreenVm = gameScreenVm)
                 }
                 composable("history"){
                     HistoryScreen()

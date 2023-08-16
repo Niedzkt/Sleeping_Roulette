@@ -8,7 +8,6 @@ import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
 import android.util.Log
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -22,6 +21,26 @@ data class DifficultyLevel(val name: String, val hourRange: IntRange, val minute
 
 
 class GameScreenViewModel:ViewModel() {
+
+    val soundsList = listOf(
+        R.raw.alarm_sound
+    )
+
+    private val soundPreferenceKey = "SelectedSound"
+
+    fun saveSelectedSound(context: Context, sound: String){
+        val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()){
+            putString(soundPreferenceKey, sound)
+            apply()
+        }
+    }
+
+    fun getSelectedSound(context: Context): String?{
+        val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(soundPreferenceKey, null)
+    }
+
     private var interstitialAd: InterstitialAd?= null
 
     fun loadInterstitialAd(context: Context){
