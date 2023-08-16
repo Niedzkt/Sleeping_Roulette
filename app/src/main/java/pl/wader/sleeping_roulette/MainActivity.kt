@@ -15,15 +15,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import pl.wader.sleeping_roulette.ui.screens.AlarmScreen
 import pl.wader.sleeping_roulette.ui.screens.GameOnScreen
 import pl.wader.sleeping_roulette.ui.screens.GameScreen
-import pl.wader.sleeping_roulette.ui.screens.HistoryScreen
 import pl.wader.sleeping_roulette.ui.screens.HomeScreen
 import pl.wader.sleeping_roulette.ui.screens.Rules
 import pl.wader.sleeping_roulette.ui.screens.SettingsScreen
@@ -54,6 +49,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
+            val context = LocalContext.current
+
             intent?.getStringExtra("NAVIGATE_TO")?.let { destination ->
                 if(destination == "alarmOn"){
                     LaunchedEffect(key1 = destination){
@@ -66,7 +63,13 @@ class MainActivity : ComponentActivity() {
                 composable("home"){
                    HomeScreen(
                        gameScreenVm = gameScreenVm,
-                       onClick = { navController.navigate(it) }
+                       onClick = {
+                           if(it=="exit") {
+                           (context as? Activity)?.finish()
+                           }
+                           else
+                               navController.navigate(it)
+                       }
                 )
                 }
                 composable("play"){
@@ -88,17 +91,15 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable("settings"){
-                    SettingsScreen(gameScreenVm = gameScreenVm)
-                }
-                composable("history"){
-                    HistoryScreen()
+                    SettingsScreen(
+                        gameScreenVm = gameScreenVm,
+                        onClick = {navController.navigate(it)}
+                    )
                 }
                 composable("knowHow"){
                         Rules()
                 }
-                composable("exit"){
 
-                }
             }
         }
     }

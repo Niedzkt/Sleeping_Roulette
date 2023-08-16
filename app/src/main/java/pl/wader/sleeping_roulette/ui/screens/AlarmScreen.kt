@@ -1,6 +1,5 @@
 package pl.wader.sleeping_roulette.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +17,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -36,9 +33,10 @@ import pl.wader.sleeping_roulette.ui.theme.MainFont
 import pl.wader.sleeping_roulette.ui.theme.MainMenuBlack
 import pl.wader.sleeping_roulette.ui.theme.imageGray
 
+/*
 const val MILISECONDS_PER_SECOND = 1000
 const val SECONDS_PER_MINUTE = 60
-const val MINUTES_PER_HOUR = 60
+const val MINUTES_PER_HOUR = 60*/
 
 @Composable
 fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
@@ -157,6 +155,8 @@ fun AlarmScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit) {
 
                 Button(
                     onClick = {
+                        gameScreenVm.loadInterstitialAd(context)
+                        gameScreenVm.showInterstitialAd(context)
                         gameScreenVm.stopOngoingAlarm()
                         onClick("home")
                     },

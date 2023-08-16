@@ -23,7 +23,12 @@ data class DifficultyLevel(val name: String, val hourRange: IntRange, val minute
 class GameScreenViewModel:ViewModel() {
 
     val soundsList = listOf(
-        R.raw.alarm_sound
+        R.raw.hamster,
+        R.raw.oh_my_god,
+        R.raw.candyland,
+        R.raw.monkey_circle,
+        R.raw.android_alarm,
+        R.raw.iphone_alarm
     )
 
     private val soundPreferenceKey = "SelectedSound"
@@ -127,9 +132,6 @@ class GameScreenViewModel:ViewModel() {
             endTime=System.currentTimeMillis()
             Log.d("GameScreenVM", "Alarm triggered. endTime: $endTime")
         }
-    }
-    fun getElapsedTimed(): Long{
-        return endTime-startTime
     }
 
 

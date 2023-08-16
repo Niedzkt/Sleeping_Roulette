@@ -1,6 +1,5 @@
 package pl.wader.sleeping_roulette.ui.theme
 
-import android.hardware.lights.Light
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -12,9 +11,6 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val Gold = Color(0xFF907A0D)
-val DarkGold = Color(0xFF4E4203)
-val DarkBlue = Color(0xFF0D2390)
-val DarkerBlue = Color(0xFF030F4E)
 val DarkerGray = Color(0xFF2F2E2F)
 val LightDarkGray = Color(0xFF181718)
 
