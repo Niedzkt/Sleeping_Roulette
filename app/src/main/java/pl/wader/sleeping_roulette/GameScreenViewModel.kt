@@ -53,7 +53,7 @@ class GameScreenViewModel:ViewModel() {
 
         InterstitialAd.load(
             context,
-            "ca-app-pub-3940256099942544/1033173712",
+            "ca-app-pub-1468444821874384/6513423213",
             adRequest,
             object : InterstitialAdLoadCallback(){
                 override fun onAdLoaded(ad: InterstitialAd) {
@@ -80,9 +80,9 @@ class GameScreenViewModel:ViewModel() {
 
 
     val difficultyLevels = listOf(
-        DifficultyLevel("Easy", 0..0, 1..2),
-        DifficultyLevel("Medium", 0..10, 0..59),
-        DifficultyLevel("Hard", 0..23, 0..59),
+        DifficultyLevel("Easy", 0..0, 0..59),
+        DifficultyLevel("Medium", 0..4, 0..59),
+        DifficultyLevel("Hard", 4..23, 0..59),
        // DifficultyLevel("Asian", 0..23, 9..59),
     )
 
