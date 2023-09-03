@@ -4,14 +4,19 @@ import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,15 +25,28 @@ import pl.wader.sleeping_roulette.ui.screens.AlarmScreen
 import pl.wader.sleeping_roulette.ui.screens.GameOnScreen
 import pl.wader.sleeping_roulette.ui.screens.GameScreen
 import pl.wader.sleeping_roulette.ui.screens.HomeScreen
-import pl.wader.sleeping_roulette.ui.screens.Rules
 import pl.wader.sleeping_roulette.ui.screens.SettingsScreen
 
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        const val MY_PERMISSIONS_REQUEST_SCHEDULE_EXACT_ALARM = 1
+    }
+
     private val gameScreenVm by viewModels<GameScreenViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (ContextCompat.checkSelfPermission(this, "android.permission.SCHEDULE_EXACT_ALARM")
+            != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                arrayOf("android.permission.SCHEDULE_EXACT_ALARM"),
+                MY_PERMISSIONS_REQUEST_SCHEDULE_EXACT_ALARM)
+        }
+
+        Log.d("AlarmDebug", "MainActivity created.")
         MobileAds.initialize(this){}
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -96,10 +114,6 @@ class MainActivity : ComponentActivity() {
                         onClick = {navController.navigate(it)}
                     )
                 }
-                composable("knowHow"){
-                        Rules()
-                }
-
             }
         }
     }

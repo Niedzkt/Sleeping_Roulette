@@ -171,7 +171,8 @@ fun GameScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit){
                         "2. Unmute the alarm sound.\n" + "\n" +
                         "3. Choose the difficulty level.\n" + "\n" +
                         "4. Follow the instructions appearing on the screen.\n" + "\n" +
-                        "5. Do not cheat.\n" + "\n",
+                        "5. Do not close the app.\n" + "\n" +
+                        "6. Do not cheat.\n" + "\n",
                 style = TextStyle(
                     fontSize = 22.sp,
                     color = imageGray
@@ -192,7 +193,7 @@ fun GameScreen(gameScreenVm: GameScreenViewModel, onClick:(String)->Unit){
                     modifier = Modifier.padding(5.dp)
                 )
                 Spacer(
-                    modifier = Modifier.height(40.dp)
+                    modifier = Modifier.height(5.dp)
                 )
 
                 DifficultySelector(gameScreenVm)

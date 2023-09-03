@@ -1,5 +1,9 @@
 package pl.wader.sleeping_roulette.ui.screens
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,12 +32,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat
 import pl.wader.sleeping_roulette.GameScreenViewModel
+import pl.wader.sleeping_roulette.MainActivity
 import pl.wader.sleeping_roulette.R
 import pl.wader.sleeping_roulette.ui.theme.DarkerGray
 import pl.wader.sleeping_roulette.ui.theme.LightDarkGray
 import pl.wader.sleeping_roulette.ui.theme.MainFont
 import pl.wader.sleeping_roulette.ui.theme.imageGray
+import android.provider.Settings
+import android.os.Build
+
 
 //onClick:(String) ->Unit
 //@Preview(showBackground = true, showSystemUi = true)

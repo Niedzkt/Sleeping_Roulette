@@ -17,6 +17,7 @@ class YourAlarmReceiver: BroadcastReceiver() {
         var isAlarmTriggered: Boolean = false
     }
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("AlarmDebug", "AlarmReceiver triggered!")
 
         playAlarmSound(context)
         showNotification(context)
@@ -32,12 +33,17 @@ class YourAlarmReceiver: BroadcastReceiver() {
     }
 
     private fun playAlarmSound(context: Context) {
+        Log.d("AlarmDebug", "Playing alarm sound.")
         val gameScreenVm = GameScreenViewModel()
         val selectedSound = gameScreenVm.getSelectedSound(context)
         val soundResId = context.resources.getIdentifier(selectedSound, "raw", context.packageName)
 
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(context, soundResId)
+            if (soundResId == null) {
+                mediaPlayer = MediaPlayer.create(context, R.raw.android_alarm)
+            } else {
+                mediaPlayer = MediaPlayer.create(context, soundResId)
+            }
         }
         mediaPlayer?.start()
     }
@@ -45,8 +51,8 @@ class YourAlarmReceiver: BroadcastReceiver() {
     private fun showNotification(context: Context){
         val builder = NotificationCompat.Builder(context, "alarm_channel")
             .setSmallIcon(R.drawable.arrow)
-            .setContentTitle("WAKE UP")
-            .setContentText("WAKY WAKY")
+            .setContentTitle("CONGRATS")
+            .setContentText("You are awake!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setSound(Settings.System.DEFAULT_ALARM_ALERT_URI)
 
